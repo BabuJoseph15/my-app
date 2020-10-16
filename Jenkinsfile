@@ -1,13 +1,13 @@
 
 node {
-   // This is to demo github action	
-   def sonarUrl = 'sonar.host.url=http://172.31.30.136:9000'
+   // This is to github action	
+   def sonarUrl = 'sonar.host.url=http://3.138.201.51:9000/'
    def mvn = tool (name: 'maven3', type: 'maven') + '/bin/mvn'
    stage('SCM Checkout'){
     // Clone repo
 	git branch: 'master', 
 	credentialsId: 'github', 
-	url: 'https://github.com/javahometech/myweb'
+	url: 'https://github.com/BabuJoseph15/my-app'
    
    }
    
@@ -27,7 +27,7 @@ node {
    }
    
    stage('deploy-dev'){
-       def tomcatDevIp = '172.31.28.172'
+       def tomcatDevIp = 'http://3.129.195.146/'
 	   def tomcatHome = '/opt/tomcat8/'
 	   def webApps = tomcatHome+'webapps/'
 	   def tomcatStart = "${tomcatHome}bin/startup.sh"
@@ -45,7 +45,7 @@ node {
 							   Job Name: ${env.JOB_NAME}
 
 Thanks,
-DevOps Team""", cc: '', from: '', replyTo: '', subject: "${env.JOB_NAME} Success", to: 'hari.kammana@gmail.com'
+DevOps Team""", cc: '', from: '', replyTo: '', subject: "${env.JOB_NAME} Success", to: 'babu.joseph5757@gmail.com'
    
    }
 }
