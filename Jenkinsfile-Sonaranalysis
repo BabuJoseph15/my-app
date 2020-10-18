@@ -14,11 +14,23 @@ node{
           sh "${mvnHome}/bin/mvn sonar:sonar"
         }
     }
+    
+    stage("Quality Gate Status Check"){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                   channel: '#jenkins-pipeline-demo',
+                   color: 'danger', 
+                   message: 'SonarQube Analysis Failed', 
+                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }    
    
    stage('Email Notification'){
       mail bcc: '', body: '''Hi Welcome to jenkins email alerts
       Thanks
-      Babu ''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph5757@gmail.com'
+      Babu''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph5757@gmail.com'
    }
-
+ 
 }
