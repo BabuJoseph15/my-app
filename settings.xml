@@ -56,5 +56,10 @@
       <username>admin</username>
       <password>admin</password>
     </server>
+    <server>
+    <id>dav:http://snapshot</id>
+    <username>admin</username>
+    <password>admin</password>
+  </server>
   </servers>
 </settings>
