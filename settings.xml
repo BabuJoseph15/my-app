@@ -21,7 +21,7 @@
           to activate snapshots for both! -->
       <repositories>
         <repository>
-          <id>snapshot</id>
+          <id>snapshots</id>
           <url>http://3.138.184.13:8081/repository/maven-snapshots/</url>
           <releases>
             <enabled>true</enabled>
@@ -33,7 +33,7 @@
       </repositories>
       <pluginRepositories>
         <pluginRepository>
-          <id>central</id>
+          <id>releases</id>
           <url>http://3.138.184.13:8081/repository/myapp-releases/</url>
           <releases>
             <enabled>true</enabled>
