@@ -1,0 +1,36 @@
+<settings>
+  <activeProfiles>
+    <!--make the profile active all the time -->
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
+  <profiles>
+    <profile>
+    <id>snapshots</id>
+        <repositories>
+        <repository>
+            <id>nexus-snapshot-repo</id>
+            <name>your custom repo</name>
+            <url>http://3.138.184.13:8081/repository/myapp-snapshots/</url>
+        </repository>
+      </repositories>
+    </profile>
+    <profile>
+    <id>releases</id>
+        <repositories>
+        <repository>
+            <id>nexus-release-repo</id>
+            <name>your custom repo</name>
+            <url>http://3.138.184.13:8081/repository/myapp-releases/</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+  <servers>
+    <server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>admin</password>
+    </server>
+  </servers>
+</settings>
