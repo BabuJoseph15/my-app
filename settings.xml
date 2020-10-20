@@ -7,7 +7,7 @@
     <mirror> <!--Send all requests to the public group -->
       <id>nexus</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://localhost:8081/nexus/content/groups/public</url>
+      <url>http://3.138.184.13:8081/</url>
     </mirror>
   </mirrors>
   <activeProfiles>
@@ -21,8 +21,8 @@
           to activate snapshots for both! -->
       <repositories>
         <repository>
-          <id>central</id>
-          <url>http://central</url>
+          <id>snapshot</id>
+          <url>http://3.138.184.13:8081/repository/maven-snapshots/</url>
           <releases>
             <enabled>true</enabled>
           </releases>
@@ -34,7 +34,7 @@
       <pluginRepositories>
         <pluginRepository>
           <id>central</id>
-          <url>http://central</url>
+          <url>http://3.138.184.13:8081/repository/myapp-releases/</url>
           <releases>
             <enabled>true</enabled>
           </releases>
