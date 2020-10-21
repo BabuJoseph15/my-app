@@ -1,7 +1,7 @@
 
 node {
    // This is to github action	
-   def sonarUrl = 'sonar.host.url=http://3.138.201.51:9000/'
+   def sonarUrl = 'sonar.host.url=http://3.16.1.250:9000/'
    def mvn = tool (name: 'maven3', type: 'maven') + '/bin/mvn'
    stage('SCM Checkout'){
     // Clone repo
@@ -27,7 +27,7 @@ node {
    }
    
    stage('deploy-dev'){
-       def tomcatDevIp = 'http://3.129.195.146/'
+       def tomcatDevIp = 'http://52.15.81.217/'
 	   def tomcatHome = '/opt/tomcat8/'
 	   def webApps = tomcatHome+'webapps/'
 	   def tomcatStart = "${tomcatHome}bin/startup.sh"
