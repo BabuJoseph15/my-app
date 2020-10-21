@@ -5,12 +5,12 @@
 
   <servers>
     <server>
-      <id>myapp-snapshots</id>
+      <id>snapshots</id>
       <username>admin</username>
       <password>admin123</password>
     </server>
     <server>
-      <id>myapp-releases</id>
+      <id>releases</id>
       <username>admin</username>
       <password>admin123</password>
     </server>
