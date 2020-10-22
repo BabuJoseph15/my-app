@@ -1,0 +1,31 @@
+node{
+   stage('SCM Checkout'){
+     git 'https://github.com/BabuJoseph15/my-app'
+   }
+   stage('Compile-Package'){
+      // Get maven home path
+      def mvnHome =  tool name: 'maven3', type: 'maven'   
+      sh "${mvnHome}/bin/mvn package"
+   }
+   
+   stage('SonarQube Analysis') {
+        def mvnHome =  tool name: 'maven3', type: 'maven'
+        withSonarQubeEnv('sonar7') { 
+          sh "${mvnHome}/bin/mvn sonar:sonar"
+        }
+    }
+    
+    stage('Quality Gates'){
+          timeout(time: 1, unit: 'HOURS') {
+              def qg = waitForQualityGate()
+              if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
+              }
+          }
+      }    
+   stage('Email Notification'){
+      mail bcc: '', body: '''Hi Welcome to jenkins email alerts
+      Thanks
+      Babu''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph5757@gmail.com'
+   }
+}
