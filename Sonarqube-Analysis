@@ -28,7 +28,7 @@ pipeline {
 		tool name: 'maven3', type: 'maven'
                 sh 'mvn clean package'
 		}
-	 }
+	    }
 	 stage('Upload Artifacts to Nexus') {
            steps {
              nexusArtifactUploader artifacts: [
