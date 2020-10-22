@@ -4,10 +4,10 @@ pipeline {
        maven 'maven3'
      }
       stages {
-	stage('Unit Test') {
+	stage('compile test') {
             steps {
 		tool name: 'maven3', type: 'maven'
-                sh 'mvn clean test'
+                sh 'mvn compile test'
 	    }
 	 }
 	 stage("SonarQube analysis") {
