@@ -24,7 +24,7 @@ node{
           }
       }    
    stage('Email Notification'){
-      mail bcc: '', body: '''Hi Welcome to jenkins email alerts
+      mail bcc: '', body: '''Hi Welcome to jenkins Sonarqube Report
       Thanks
       Babu''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph5757@gmail.com'
    }
