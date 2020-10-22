@@ -3,15 +3,6 @@ pipeline {
      tools {
        maven 'maven3'
      }
-     environment {
-        NEXUS_URL = "http://18.188.105.154:8081/content/repositories/releases/"
-	NEXUS_REPO_ID = "releases"
-	GROUP_ID="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:groupId/text()' | xmllint --shell pom.xml | grep -v /`"
-        ARTIFACT_ID="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:artifactId/text()' | xmllint --shell pom.xml | grep -v /`"
-      	VERSION="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:version/text()' | xmllint --shell pom.xml | grep -v /`"
-	NEXUS_VERSION="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:version/text()' | xmllint --shell pom.xml | grep -v /`.${BUILD_NUMBER}"
-        FILE_NAME="target/${ARTIFACT_ID}-${VERSION}.war"
-      }
       stages {
 	stage('Unit Test') {
             steps {
@@ -34,10 +25,23 @@ pipeline {
 	 }
 	 stage('Publish Artifacts to Nexus') {
             steps {
-              script{
-	        sh "mvn -B deploy:deploy-file -Durl=$NEXUS_URL -DrepositoryId=$NEXUS_REPO_ID -DgroupId=$GROUP_ID -Dversion=$NEXUS_VERSION -DartifactId=$ARTIFACT_ID -Dpackaging=war -Dfile=$FILE_NAME"
-	      }
+                 nexusArtifactUploader artifacts: [
+		      [
+		          artifactId: 'myweb', 
+			  classifier: '', 
+			  file: '/target/1.0-SNAPSHOT.war', 
+			  type: 'war'
+		      ]
+		 ], 
+		 credentialsId: 'Babu-Nexus', 
+		 groupId: 'in.java', 
+		 nexusUrl: '18.188.105.154:8081', 
+		 nexusVersion: 'nexus3', 
+		 protocol: 'http', 
+		 repository: 'http://18.188.105.154:8081/repository/myapp-snapshots/', 
+		 version: '1.0.SNAPSHOT'
             }
 	 }
       }
     }
+}
