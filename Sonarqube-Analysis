@@ -6,20 +6,20 @@ pipeline {
      stages {
 	stage('Unit Test') {
             steps {
-		tool name: 'maven', type: 'maven'
+		tool name: 'maven3', type: 'maven'
                 sh 'mvn clean test'
 	    }
 	 }
 	 stage("SonarQube analysis") {
              steps {
-                 withSonarQubeEnv('sonar') {
+                 withSonarQubeEnv('sonar7') {
                   sh 'mvn sonar:sonar'
                  }    
              }
          }
-	 stage('package') {
+	 stage('clean package') {
             steps {
-		tool name: 'maven', type: 'maven'
+		tool name: 'maven3', type: 'maven'
                 sh 'mvn package'
 		}
 	 }
