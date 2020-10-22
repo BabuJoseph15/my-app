@@ -3,51 +3,39 @@ pipeline {
      tools {
        maven 'maven3'
      }
-     stages {
+     environment {
+        NEXUS_URL = "http://18.188.178.77:8081/content/repositories/releases/"
+	NEXUS_REPO_ID = "releases"
+	GROUP_ID="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:groupId/text()' | xmllint --shell pom.xml | grep -v /`"
+        ARTIFACT_ID="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:artifactId/text()' | xmllint --shell pom.xml | grep -v /`"
+      	VERSION="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:version/text()' | xmllint --shell pom.xml | grep -v /`"
+	NEXUS_VERSION="`echo -e 'setns x=http://maven.apache.org/POM/4.0.0\ncat /x:project/x:version/text()' | xmllint --shell pom.xml | grep -v /`.${BUILD_NUMBER}"
+        FILE_NAME="target/${ARTIFACT_ID}-${VERSION}.war"
+      }
+      stages {
 	stage('Unit Test') {
             steps {
 		tool name: 'maven3', type: 'maven'
                 sh 'mvn clean test'
 	    }
 	 }
-	 stage('SonarQube analysis') {
-             withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn clean package sonar:sonar'
-             } // SonarQube taskId is automatically attached to the pipeline context
+	 stage("SonarQube analysis") {
+             steps {
+                 withSonarQubeEnv('sonar7') {
+                  sh 'mvn sonar:sonar'
+                 }    
+             }
          }
-     }
-     stage("Quality Gate"){
-         timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-         def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-         if (qg.status != 'OK') {
-             error "Pipeline aborted due to quality gate failure: ${qg.status}"
-         }
-      }
-   }
-	 stage('clean package') {
+	 stage('package') {
             steps {
 		tool name: 'maven3', type: 'maven'
                 sh 'mvn package'
 		}
 	 }
-	 stage('Upload Artifacts to Nexus') {
-           steps {
-             nexusArtifactUploader artifacts: [
-                  [
-                     artifactId: 'myweb', 
-                     classifier: '', 
-                     file: 'target/myweb-1.0-SNAPSHOT.war', 
-                     type: 'war'
-                   ]
-             ], 
-             credentialsId: 'Babu-Nexus', 
-             groupId: 'in.javahome', 
-             nexusUrl: '18.188.178.77:8081', 
-             nexusVersion: 'nexus3', 
-             protocol: 'http', 
-             repository: 'myapp-releases', 
-             version: '${revision}'
-	    }
-         }
-      }
-     
+	 stage('Publish Artifacts to Nexus') {
+            steps {
+              script{
+	        sh "mvn -B deploy:deploy-file -Durl=$NEXUS_URL -DrepositoryId=$NEXUS_REPO_ID -DgroupId=$GROUP_ID -Dversion=$NEXUS_VERSION -DartifactId=$ARTIFACT_ID -Dpackaging=war -Dfile=$FILE_NAME"
+	      }
+            }
+	  }
