@@ -23,7 +23,7 @@ pipeline {
                 sh 'mvn package'
 		}
 	 }
-	 stage('Publish Artifacts to Nexus') {
+	 stage('Upload Artifacts to Nexus') {
             steps {
                  nexusArtifactUploader artifacts: [
 		      [
