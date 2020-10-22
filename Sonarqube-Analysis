@@ -50,9 +50,4 @@ pipeline {
 	    }
          }
       }
-      stage('Email Notification'){
-          mail bcc: '', body: '''Hi Welcome to jenkins email alerts
-          Thanks
-          Babu''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph@gmail.com'
-         }
-     }
+     
