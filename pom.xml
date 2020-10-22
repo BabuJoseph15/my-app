@@ -4,11 +4,12 @@
 	<groupId>in.javahome</groupId>
 	<artifactId>myweb</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.0</version>
+	<version>${revision}</version>
 	<name>my-app</name>
 	<url>http://maven.apache.org</url>
-	
-	
+	<properties>
+	<revision>1.0-SNAPSHOT</revision>
+    </properties>
 	
 	<dependencies>
 		<dependency>
