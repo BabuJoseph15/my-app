@@ -20,7 +20,7 @@
     <mirror>
       <id>central</id>
       <name>central</name>
-      <url>http://18.188.178.77:8081/repository/myapp-group/</url>
+      <url>http://18.188.178.77/repository/myapp-group/</url>
       <mirrorOf>*</mirrorOf>
     </mirror>
   </mirrors>
