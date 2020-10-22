@@ -29,7 +29,7 @@ pipeline {
                   [
                      artifactId: 'myweb', 
                      classifier: '', 
-                     file: 'target/myweb-1.0.0.war', 
+                     file: 'target/myweb-1.0-SNAPSHOT.war', 
                      type: 'war'
                    ]
              ], 
