@@ -4,9 +4,9 @@ pipeline {
        maven 'maven3'
      }
       stages {
-	stage('Unit Test') {
+	stage('unit Test') {
             steps {
-		tool name: 'maven', type: 'maven'
+		tool name: 'maven3', type: 'maven'
                 sh 'mvn clean test'
 	    }
 	 }
@@ -19,8 +19,8 @@ pipeline {
          }
 	 stage('clean package') {
             steps {
-		tool name: 'maven', type: 'maven'
-                sh 'mvn package'
+		tool name: 'maven3', type: 'maven'
+                sh 'mvn clean package'
 		}
 	 }
 	 stage('Upload Artifacts to Nexus') {
@@ -38,7 +38,7 @@ pipeline {
              nexusUrl: '18.188.178.77:8081', 
              nexusVersion: 'nexus3', 
              protocol: 'http', 
-             repository: 'http://18.188.178.77:8081/repository/myapp-releases/', 
+             repository: 'myapp-releases', 
              version: '1.0.0'
 	     }
     }
