@@ -3,25 +3,26 @@ pipeline {
      tools {
        maven 'maven3'
      }
-      stages {
-	stage('unit Test') {
+     stages {
+	stage('Unit Test') {
             steps {
-		tool name: 'maven3', type: 'maven'
+		tool name: 'maven', type: 'maven'
                 sh 'mvn clean test'
 	    }
 	 }
-	 stage('SonarQube analysis') {
+	 stage("SonarQube analysis") {
              steps {
-                 withSonarQubeEnv('sonar7') {
+                 withSonarQubeEnv('sonar') {
                   sh 'mvn sonar:sonar'
                  }    
-             }	  
-	 stage('clean package') {
+             }
+         }
+	 stage('package') {
             steps {
-		tool name: 'maven3', type: 'maven'
-                sh 'mvn clean package'
+		tool name: 'maven', type: 'maven'
+                sh 'mvn package'
 		}
-	    }
+	 }
 	 stage('Upload Artifacts to Nexus') {
            steps {
              nexusArtifactUploader artifacts: [
