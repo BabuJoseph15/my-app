@@ -10,13 +10,27 @@ pipeline {
                 sh 'mvn clean test'
 	    }
 	 }
-	 stage("SonarQube analysis") {
-             steps {
-                 withSonarQubeEnv('sonar7') {
-                  sh 'mvn sonar:sonar'
-                 }    
-             }
-         }
+	 stage('Sonarqube Analysis') {
+            environment {
+				scannerHome = tool 'sonar7'
+		    }
+			steps {
+				withSonarQubeEnv('sonar7') {
+					sh "${scannerHome}/opt/sonar-scanner"
+				  }
+				echo "test1"
+				sleep time: 30000, unit: 'MILLISECONDS'
+				echo "test2"
+				script {
+						echo "test3"
+						def qg = waitForQualityGate()
+						echo "test4"
+						if (qg.status != 'OK') {
+							//error "Pipeline aborted due to quality gate failure: ${qg.status}"
+							echo "test4"
+					    }
+				    }
+			    }
 	 stage('clean package') {
             steps {
 		tool name: 'maven3', type: 'maven'
