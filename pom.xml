@@ -32,12 +32,12 @@
 	<distributionManagement>
 		 <snapshotRepository>
 		    <id>snapshots</id>
-		    <url>http://18.188.105.154:8081/repository/maven-snapshots/</url>
+		    <url>http://18.219.125.98:8081/repository/myapp-snapshots/</url>
 		 </snapshotRepository>
 		
 		<repository>
 		    <id>releases</id>
-		    <url>http://18.188.105.154:8081/repository/myapp-releases/</url>
+		    <url>http://18.219.125.98:8081/repository/myapp-releases/</url>
 		</repository>
   	</distributionManagement>
 	
