@@ -55,4 +55,3 @@ pipeline {
       Thanks
       Babu''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph5757@gmail.com'
    }
-}
