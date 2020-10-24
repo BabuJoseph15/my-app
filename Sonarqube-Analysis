@@ -35,11 +35,11 @@ pipeline {
 		 ], 
 		 credentialsId: 'Babu-Nexus', 
 		 groupId: 'in.java.home', 
-		 nexusUrl: '18.188.105.154:8081', 
+		 nexusUrl: '18.219.125.98:8081', 
 		 nexusVersion: 'nexus3', 
 		 protocol: 'http', 
-		 repository: 'http://18.188.105.154:8081/repository/myapp-releases/', 
-		 version: '{revision}'
+		 repository: 'http://18.219.125.98:8081/repository/myapp-releases/', 
+		 version: '1.0.0'
             }
 	 }
       }
