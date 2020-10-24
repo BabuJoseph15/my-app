@@ -31,12 +31,12 @@
 	</dependencies>
 	<distributionManagement>
 		 <snapshotRepository>
-		    <id>snapshots</id>
+		    <id>deployment</id>
 		    <url>http://18.219.125.98:8081/repository/myapp-snapshots/</url>
 		 </snapshotRepository>
 		
 		<repository>
-		    <id>releases</id>
+		    <id>deployment</id>
 		    <url>http://18.219.125.98:8081/repository/myapp-releases/</url>
 		</repository>
   	</distributionManagement>
