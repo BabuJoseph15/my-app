@@ -16,7 +16,7 @@ pipeline {
         // Where your Nexus is running.
         NEXUS_URL = "18.220.130.83:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "http://18.220.130.83:8081/repository/myapp-releases/"
+        NEXUS_REPOSITORY = "http://18.220.130.83:8081/repository/Myapp-releases/"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "Babu-Nexus"
     }
@@ -64,7 +64,7 @@ pipeline {
                             nexusUrl: '18.220.130.83:8081',
                             groupId: 'in.java.home',
                             version: '1.0-SNAPSHOT',
-                            repository: 'http://18.220.130.83:8081/repository/myapp-releases/',
+                            repository: 'http://18.220.130.83:8081/repository/Myapp-releases/',
                             credentialsId: 'Babu-Nexus',
                             artifacts: [
                                 // Artifact generated such as .jar, .ear and .war files.
