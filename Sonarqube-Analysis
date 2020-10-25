@@ -60,7 +60,7 @@ pipeline {
                         
                         nexusArtifactUploader(
                             nexusVersion: 'nexus3',
-                            protocol: 	http,
+                            protocol: 	'http',
                             nexusUrl: '18.220.130.83:8081',
                             groupId: 'in.java.home',
                             version: '1.0.0-SNAPSHOT',
