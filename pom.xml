@@ -31,12 +31,12 @@
 	</dependencies>
 	<distributionManagement>
 		 <snapshotRepository>
-		    <id>nexus-deploy</id>
+		    <id>nexus</id>
 		    <url>http://18.220.130.83:8081/repository/myapp-snapshots/</url>
 		 </snapshotRepository>
 		
 		<repository>
-		    <id>nexus-deploy</id>
+		    <id>nexus</id>
 		    <url>http://18.220.130.83:8081/repository/myapp-releases/</url>
 		</repository>
   	</distributionManagement>
