@@ -59,22 +59,22 @@ pipeline {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
                         
                         nexusArtifactUploader(
-                            nexusVersion: nexus3,
+                            nexusVersion: 'nexus3',
                             protocol: 	http,
                             nexusUrl: '18.220.130.83:8081',
                             groupId: 'in.java.home',
                             version: '1.0.0-SNAPSHOT',
                             repository: 'http://18.220.130.83:8081/repository/myapp-releases/',
-                            credentialsId: Babu-Nexus,
+                            credentialsId: 'Babu-Nexus',
                             artifacts: [
                                 // Artifact generated such as .jar, .ear and .war files.
-                                [artifactId: myweb,
+                                [artifactId: 'myweb',
                                 classifier: '',
                                 file: artifactPath,
                                 type: pom.packaging],
 
                                 // Lets upload the pom.xml file for additional information for Transitive dependencies
-                                [artifactId: myweb,
+                                [artifactId: 'myweb',
                                 classifier: '',
                                 file: "pom.xml",
                                 type: "pom"]
