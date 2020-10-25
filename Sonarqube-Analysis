@@ -14,9 +14,9 @@ pipeline {
         // This can be http or https
         NEXUS_PROTOCOL = "http"
         // Where your Nexus is running.
-        NEXUS_URL = "nexus3:8081"
+        NEXUS_URL = "18.220.130.83:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "myapp-releases"
+        NEXUS_REPOSITORY = "http://18.220.130.83:8081/repository/myapp-releases/"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "Babu-Nexus"
     }
@@ -59,22 +59,22 @@ pipeline {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
                         
                         nexusArtifactUploader(
-                            nexusVersion: NEXUS_VERSION,
-                            protocol: NEXUS_PROTOCOL,
-                            nexusUrl: NEXUS_URL,
-                            groupId: pom.groupId,
-                            version: pom.version,
-                            repository: NEXUS_REPOSITORY,
-                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            nexusVersion: nexus3,
+                            protocol: 	http,
+                            nexusUrl: '18.220.130.83:8081',
+                            groupId: 'in.java.home',
+                            version: '1.0.0-SNAPSHOT',
+                            repository: 'http://18.220.130.83:8081/repository/myapp-releases/',
+                            credentialsId: Babu-Nexus,
                             artifacts: [
                                 // Artifact generated such as .jar, .ear and .war files.
-                                [artifactId: pom.artifactId,
+                                [artifactId: myweb,
                                 classifier: '',
                                 file: artifactPath,
                                 type: pom.packaging],
 
                                 // Lets upload the pom.xml file for additional information for Transitive dependencies
-                                [artifactId: pom.artifactId,
+                                [artifactId: myweb,
                                 classifier: '',
                                 file: "pom.xml",
                                 type: "pom"]
