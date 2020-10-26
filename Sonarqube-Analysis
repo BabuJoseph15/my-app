@@ -50,7 +50,7 @@ pipeline {
 stage('Deploy to Tomcat'){
       
     sshagent(['tomcat-dev']) {
-         sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/my-app/target*.war ec2-user@13.59.192.244:/opt/tomcat8/webapps/'
+         sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/my-app/target/myweb-1.0.0-SNAPSHOT.war ec2-user@13.59.192.244:/opt/tomcat8/webapps/'
       }
    }
    stage('Email Notification'){
