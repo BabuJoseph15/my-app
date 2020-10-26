@@ -5,7 +5,7 @@ pipeline {
     }
     
     stages {
-	stage('Junit') {
+	stage('compile') {
             steps {
 		tool name: 'maven3', type: 'maven'
                 sh 'mvn compile test'
