@@ -1,0 +1,57 @@
+pipeline {
+    agent any 
+     tools {
+        maven 'maven3'
+    }
+    environment {
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "18.191.49.246:8081"
+        NEXUS_REPOSITORY = "myapp-releases"
+        NEXUS_CREDENTIAL_ID = "nexus"
+    }
+    
+    stages {
+	stage('compile') {
+            steps {
+		tool name: 'maven3', type: 'maven'
+                sh 'mvn compile test'
+	    }
+	 }
+	 stage("SonarQube analysis") {
+             steps {
+                 withSonarQubeEnv('sonar7') {
+                  sh 'mvn sonar:sonar'
+                 }    
+             }
+         }
+	 stage('clean package') {
+            steps {
+		tool name: 'maven3', type: 'maven'
+                sh 'mvn clean package'
+		}
+	 }
+	 
+	 
+	 
+	 stage('Upload Artifacts to Nexus') {
+            steps {
+                 nexusArtifactUploader artifacts: [
+		      [
+		           artifactId: 'myweb', 
+			   classifier: '', 
+			   file: 'target/myweb-1.0.0-SNAPSHOT.war', 
+			   type: 'war'
+		      ]
+		 ], 
+		 credentialsId: 'nexus', 
+		 groupId: 'in.java.home', 
+		 nexusUrl: '18.191.49.246:8081', 
+		 nexusVersion: 'nexus3', 
+		 protocol: 'http', 
+		 repository: 'myapp-releases', 
+		 version: '1.0.0'
+            }
+	 }
+      }
+    }
