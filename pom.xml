@@ -31,15 +31,11 @@
 	</dependencies>
 	<distributionManagement>
   <repository>
-    <id>nexus</id>
+    <id>deploymentRepo</id>
       <name>releases</name>
-    <url>http://18.191.49.246:8081/repository/maven-releases/</url>
+    <url>http://18.191.49.246:8081/repository/myapp-releases/</url>
   </repository>
-  <snapshotRepository>
-    <id>nexus</id>
-      <name>snapshots</name>
-    <url>http://18.191.49.246:8081/repository/maven-snapshots/</url>
-  </snapshotRepository>
+		
 </distributionManagement>
 <build>
     <pluginManagement>
