@@ -7,7 +7,7 @@ pipeline {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "18.191.49.246:8081"
-        NEXUS_REPOSITORY = "maven-releases"
+        NEXUS_REPOSITORY = "myapp-releases"
         NEXUS_CREDENTIAL_ID = "Babu-Nexus"
     }
     
@@ -47,7 +47,7 @@ pipeline {
 		 nexusUrl: '18.191.49.246:8081', 
 		 nexusVersion: 'nexus3', 
 		 protocol: 'http', 
-		 repository: 'maven-releases', 
+		 repository: 'myapp-releases', 
 		 version: '1.0.0-SNAPSHOT'
             }
 	 }
