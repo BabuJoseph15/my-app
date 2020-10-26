@@ -28,7 +28,7 @@ pipeline {
 	 stage('clean package') {
             steps {
 		tool name: 'maven3', type: 'maven'
-                sh 'mvn package'
+                sh 'mvn clean package'
 		}
 	 }
 	 
