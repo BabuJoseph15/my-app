@@ -30,17 +30,17 @@
 	
 	</dependencies>
 	<distributionManagement>
-		 <snapshotRepository>
-		    <id>nexus</id>
-		    <url>http://18.191.49.246:8081/repository/Myapp-snapshots</url>
-		 </snapshotRepository>
-		
-		<repository>
-		    <id>nexus</id>
-		    <url>http://18.191.49.246:8081/repository/Myapp-releases</url>
-		</repository>
-  	</distributionManagement>
-	
+  <repository>
+    <id>nexus</id>
+      <name>releases</name>
+    <url>http://18.191.49.246:8081/repository/maven-releases/</url>
+  </repository>
+  <snapshotRepository>
+    <id>nexus</id>
+      <name>snapshots</name>
+    <url>http://18.191.49.246:8081/repository/maven-snapshots/</url>
+  </snapshotRepository>
+</distributionManagement>
 <build>
     <pluginManagement>
     <plugins>
