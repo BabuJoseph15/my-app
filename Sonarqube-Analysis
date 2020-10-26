@@ -47,16 +47,5 @@ pipeline {
       }
     }
 
-stage('Deploy to Tomcat'){
-      
-    sshagent(['tomcat-dev']) {
-         sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Pipeline-NexusUploader/target/myweb-1.0.0-SNAPSHOT.war ec2-user@13.59.192.244:/opt/tomcat8/webapps/'
-      }
-   }
-   stage('Email Notification'){
-      mail bcc: '', body: '''Hi Welcome to jenkins email alerts
-      Thanks
-      Babu''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph5757@gmail.com'
-   }
 
 
