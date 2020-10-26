@@ -8,7 +8,7 @@ pipeline {
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "18.191.49.246:8081"
         NEXUS_REPOSITORY = "myapp-releases"
-        NEXUS_CREDENTIAL_ID = "Babu-Nexus"
+        NEXUS_CREDENTIAL_ID = "nexus"
     }
     
     stages {
@@ -42,7 +42,7 @@ pipeline {
 			   type: 'war'
 		      ]
 		 ], 
-		 credentialsId: 'Babu-Nexus', 
+		 credentialsId: 'nexus', 
 		 groupId: 'in.java.home', 
 		 nexusUrl: '18.191.49.246:8081', 
 		 nexusVersion: 'nexus3', 
