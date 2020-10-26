@@ -51,8 +51,12 @@ pipeline {
 	        repository: 'sampleapp-release', 
 	        version: '1.0.0'
 	    }
-	  }
-  }
-}
+	 }
+     }
+ }
+ stage('Deploy war To Tomcat') {
+    steps {
+ 
+    
     
    
