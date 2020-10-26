@@ -7,7 +7,7 @@ pipeline {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "18.191.49.246:8081"
-        NEXUS_REPOSITORY = "myapp-releases"
+        NEXUS_REPOSITORY = "mytest-repo"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
     
@@ -49,7 +49,7 @@ pipeline {
 		 nexusUrl: '18.191.49.246:8081', 
 		 nexusVersion: 'nexus3', 
 		 protocol: 'http', 
-		 repository: 'myapp-releases', 
+		 repository: 'mytest-repo', 
 		 version: '0.0.8-SNAPSHOT'
             }
 	 }
