@@ -40,7 +40,7 @@ pipeline {
 		      [
 		           artifactId: 'myweb', 
 			   classifier: '', 
-			   file: 'target/myweb-1.0.0-SNAPSHOT.war', 
+			   file: 'target/myweb-0.0.8-SNAPSHOT.war', 
 			   type: 'war'
 		      ]
 		 ], 
@@ -50,7 +50,7 @@ pipeline {
 		 nexusVersion: 'nexus3', 
 		 protocol: 'http', 
 		 repository: 'myapp-releases', 
-		 version: '1.0.0'
+		 version: '0.0.8-SNAPSHOT'
             }
 	 }
       }
