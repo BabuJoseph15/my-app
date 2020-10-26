@@ -53,7 +53,7 @@ pipeline {
                     
                     if(artifactExists) {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
-                        
+                        bv  
                         nexusArtifactUploader(
                             nexusVersion: 'nexus3',
                             protocol: 	'http',
@@ -72,7 +72,7 @@ pipeline {
                                 // Lets upload the pom.xml file for additional information for Transitive dependencies
                                 [artifactId: 'myweb',
                                 classifier: '',
-                                file: "pom.xml",
+                                file: 'pom.xml',
                                 type: "pom"]
                             ]
                         );
@@ -87,14 +87,3 @@ pipeline {
     }
 }
 	
-stage('Deploy to Tomcat'){
-      
-    sshagent(['tomcat-dev']) {
-         sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@13.59.192.244:/opt/tomcat8/webapps/'
-      }
-   }
-   stage('Email Notification'){
-      mail bcc: '', body: '''Hi Welcome to jenkins email alerts
-      Thanks
-      Babu''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'babu.joseph5757@gmail.com'
-   }
