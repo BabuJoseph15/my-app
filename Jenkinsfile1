@@ -48,7 +48,7 @@ stage("SonarQube Analysis") {
             }
         }
         
-        stage("Upload artifacts ") {
+        stage("Upload artifacts to Nexus ") {
             steps {
                 script {
                  
