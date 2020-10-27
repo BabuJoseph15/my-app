@@ -1,0 +1,19 @@
+ node{
+ stage('Git Checkout'){
+	git 'https://github.com/BabuJoseph15/my-app.git'  
+ }
+ stage('Maven Package'){
+	sh 'mvn clean package'
+	sh 'mv /var/lib/jenkins/workspace/Sampleapp/target/sampleapp-1.0.0.war target/sampleapp.war'
+ }
+ 
+ stage('Build Docker Imager'){
+   sh 'docker build -t http://3.19.27.239:8081/repository/docker-repo/sampleapp:1.0.0 .'
+ }
+   stage('Push Docker Image'){
+     withCredentials([string(credentialsId: 'nexus')]) {
+        sh "docker login -u admin -p ${nexus}"
+     }
+     sh 'docker push http://3.19.27.239:8081/repository/docker-repo/sampleapp:1.0.0'
+   }
+   
