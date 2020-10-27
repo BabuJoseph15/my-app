@@ -7,8 +7,8 @@
         def mvnCMD = "${mvnHome}/bin/mvn"
         sh "${mvnCMD} clean package"
  }
- stage('Build Docker Imager'){
-   sh 'docker build -t http://3.19.27.239:8081/repository/docker-repo/sampleapp:1.0.0 .'
+ stage('Build Docker Image'){
+   sh 'docker build -t admin/sampleapp:1.0.0 .'
  }
    stage('Push Docker Image'){
      withCredentials([string(credentialsId: 'nexus')]) {
