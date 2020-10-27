@@ -56,7 +56,7 @@ pipeline {
  stage('Deploy To Tomcat') {
     steps {
         sh "wget http://3.19.27.239:8081/repository/sampleapp-release/in/java/home/sampleapp/1.0.0/sampleapp-1.0.0.war"
-	sshagent(['tomcat-dev']) {
+	sshagent(['tomcat']) {
         sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Sampleapp/target/sampleapp-1.0.0.war ec2-user@172.31.47.98:/opt/tomcat8/webapps/"
         }
      }
