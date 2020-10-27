@@ -3,7 +3,7 @@ pipeline {
         label "master"
     }
     tools {
-       maven "Maven"
+       maven "maven3"
     }
     environment {
         NEXUS_VERSION = "nexus3"
