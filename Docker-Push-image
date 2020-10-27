@@ -16,4 +16,5 @@
      }
      sh 'docker push http://3.19.27.239:8081/repository/docker-repo/sampleapp:1.0.0'
    }
+ }
    
