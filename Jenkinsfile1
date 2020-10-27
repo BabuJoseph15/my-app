@@ -25,6 +25,23 @@ pipeline {
                  }    
              }
          }
+	 stage ("Quality Gatest") {
+     steps {
+        script {
+           STAGE_NAME = "Quality Gates"
+
+           if (BRANCH_NAME == "my-app") {
+              echo "In 'develop' branch, skip."
+           }
+           else { // this is a PR build, fail on threshold spill
+              def qualitygate = waitForQualityGate()
+              if (qualitygate.status != "OK") {
+                 error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+              } 
+           }
+        }
+     }
+  }     
 	 stage('clean package') {
             steps {
 		tool name: 'maven3', type: 'maven'
