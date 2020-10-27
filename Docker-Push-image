@@ -1,12 +1,12 @@
  node{
- stage('Git Checkout'){
-	git 'https://github.com/BabuJoseph15/my-app.git'  
+ stage('Scm Checkout'){
+	 git credentialsId: 'git-creds', url: 'https://github.com/BabuJoseph15/my-app.git'  
  }
  stage('Maven Package'){
-	sh 'mvn clean package'
-	sh 'mv /var/lib/jenkins/workspace/Sampleapp/target/sampleapp-1.0.0.war target/sampleapp.war'
+	def mvnHome = tool name: 'maven3', type: 'maven'
+        def mvnCMD = "${mvnHome}/bin/mvn"
+        sh "${mvnCMD} clean package"
  }
- 
  stage('Build Docker Imager'){
    sh 'docker build -t http://3.19.27.239:8081/repository/docker-repo/sampleapp:1.0.0 .'
  }
