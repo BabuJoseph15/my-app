@@ -6,7 +6,7 @@ pipeline {
     environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "172.31.41.125:8081"
+        NEXUS_URL = "3.129.9.235:8081"
         NEXUS_REPOSITORY = "sampleapp-release"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
@@ -44,7 +44,7 @@ pipeline {
 	        ], 
 	        credentialsId: 'nexus', 
 	        groupId: 'in.java.home', 
-	        nexusUrl: '172.31.41.125:8081', 
+	        nexusUrl: '3.129.9.235:8081', 
 	        nexusVersion: 'nexus3', 
 	        protocol: 'http', 
 	        repository: 'sampleapp-release', 
@@ -53,11 +53,4 @@ pipeline {
 	 }
      }
  }
- stage('Deploy To Tomcat') {
-    steps {
-        sh 'wget http://172.31.41.125:8081/repository/sampleapp-release/in/java/home/sampleapp/1.0.0/sampleapp-1.0.0.war'
-	sshagent(['tomcat-dev']) {
-        sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Sampleapp/target/sampleapp-1.0.0.war ec2-user@172.31.47.98:/opt/tomcat8/webapps/'
-        }
-    }
-}      
+ 
