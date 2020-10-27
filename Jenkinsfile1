@@ -6,7 +6,7 @@ pipeline {
     environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "3.129.9.235:8081"
+        NEXUS_URL = "3.19.27.239:8081"
         NEXUS_REPOSITORY = "sampleapp-release"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
@@ -44,7 +44,7 @@ pipeline {
 	        ], 
 	        credentialsId: 'nexus', 
 	        groupId: 'in.java.home', 
-	        nexusUrl: '3.129.9.235:8081', 
+	        nexusUrl: '3.19.27.239:8081', 
 	        nexusVersion: 'nexus3', 
 	        protocol: 'http', 
 	        repository: 'sampleapp-release', 
