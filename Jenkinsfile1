@@ -1,7 +1,9 @@
 pipeline {
-    agent any 
-     tools {
-        maven 'maven3'
+    agent {
+        label "master"
+    }
+    tools {
+       maven "Maven"
     }
     environment {
         NEXUS_VERSION = "nexus3"
@@ -10,55 +12,60 @@ pipeline {
         NEXUS_REPOSITORY = "sampleapp-release"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
-    
     stages {
-	stage('UnitTesting') {
+        stage("Checkout") {
             steps {
-		tool name: 'maven3', type: 'maven'
-                sh 'mvn compile test'
-	    }
-	 }
-	 stage ("SonarQube analysis") {
+                script {
+                    git 'https://github.com/BabuJoseph15/my-app.git';
+                }
+            }
+        }
+stage("junit")
+{
+steps{
+sh 'mvn test'
+}
+}
+stage("SonarQube Analysis") {
              steps {
                  withSonarQubeEnv('sonar7') {
                   sh 'mvn sonar:sonar'
                  }    
              }
          }
-	 stage('clean package') {
+//stage('Quality Gate') {
+            //steps {
+              //timeout(time: 1, unit: 'HOURS') {
+                //waitForQualityGate abortPipeline: true
+              //}
+            //}
+          //}
+        stage("Maven Package") {
             steps {
-		tool name: 'maven3', type: 'maven'
-                sh 'mvn clean package'
-		 }
-	 }
-	 stage('Upload war To Nexus') {
-	    steps {
-	 
-	         nexusArtifactUploader artifacts: [
-	             [
-	                 artifactId: 'sampleapp', 
-	                 classifier: '', 
-	                 file: 'target/sampleapp-1.0.0.war', 
-	                 type: 'war'
-	            ]
-	        ], 
-	        credentialsId: 'nexus', 
-	        groupId: 'in.java.home', 
-	        nexusUrl: '3.19.27.239:8081', 
-	        nexusVersion: 'nexus3', 
-	        protocol: 'http', 
-	        repository: 'sampleapp-release', 
-	        version: '1.0.0'
-	    }
-	 }
-       }
-    }
- stage('Deploy To Tomcat') {
-    steps {
-        sh "wget http://3.19.27.239:8081/repository/sampleapp-release/in/java/home/sampleapp/1.0.0/sampleapp-1.0.0.war"
-	sshagent(['tomcat']) {
-        sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Sampleapp/target/sampleapp-1.0.0.war ec2-user@172.31.47.98:/opt/tomcat8/webapps/"
+                script {
+                    sh "mvn clean package"
+                }
+            }
         }
-     }
-  } 
+        
+        stage("Upload artifacts ") {
+            steps {
+                script {
+                 
+                nexusArtifactUploader artifacts: [[artifactId: 'sampleapp', classifier: '', file: 'target/sampleapp-1.0.0.war', type: 'war']], credentialsId: 'nexus', groupId: 'in.java.home', nexusUrl: '3.19.27.239:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'sampleapp-release', version: '1.0.0'
+                }
+            }
+        }
+stage('Deploy to Tomcat')
+{
+steps
+{
+sh "wget http://3.19.27.239:8081/repository/sampleapp-release/in/java/home/sampleapp/1.0.0/sampleapp-1.0.0.war"
+sshagent(['tomcat']) {
+sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Sampleapp/target/sampleapp-1.0.0.war ec2-user@172.31.47.98:/opt/tomcat8/webapps"
+}                                       
+}
+}
+}
+  
 }
