@@ -11,9 +11,9 @@ pipeline {
            git changelog: false, credentialsId: 'Gitcredentials', poll: false, url: 'https://github.com/BabuJoseph15/my-app.git'
            }
         }
-        stage('Junit') {
+        stage('unittesting') {
             steps {
-                sh 'mvn test'
+                sh 'mvn compile test'
             }
         }
         stage('SonarQube Analysis') {
