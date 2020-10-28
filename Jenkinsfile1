@@ -8,7 +8,7 @@ pipeline {
     environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "3.19.27.239:8081"
+        NEXUS_URL = "18.222.180.174:8081"
         NEXUS_REPOSITORY = "sampleapp-release"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
@@ -50,10 +50,8 @@ stage("SonarQube analysis") {
   stage("Run docker container")
      steps { 
           sh 'docker run -d --name sampleapp -p 8082:8082 18.222.180.174:8083/sampleapp:1.0.0'
+          sshagent(['dev-server']) {
+          sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.47.98 ${dockerRun}"
         }
      }
-  }
-}  
-        
-      
-         
+  }      
