@@ -1,48 +1,53 @@
 pipeline {
-    agent any{
-    
+    agent any
+
     tools {
-       maven "maven3"
+        maven "maven3"
     }
     
     stages {
-        stage("SCM checkout") {
+        stage('Git clone') {
+           steps {
+           git changelog: false, credentialsId: 'Gitcredentials', poll: false, url: 'https://github.com/BabuJoseph15/my-app.git'
+           }
+        }
+        stage('Junit') {
             steps {
-                    git 'https://github.com/BabuJoseph15/my-app.git';
+                sh 'mvn test'
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonar7') {
+                    sh 'mvn sonar:sonar'
                 }
             }
-        stage("junit") {
-           steps{
-              sh 'mvn test'
-           }
-         }
-         stage("SonarQube analysis") {
+        }
+        stage('Build Stage') {
             steps {
-               withSonarQubeEnv('sonar7') {
-                  sh 'mvn sonar:sonar'
-                 }    
-             }
-         }
-         stage("Build Docker Image") {
-             steps {
-                sh 'docker build . -t 18.222.180.174:8083/sampleapp:1.0.0'
-             }
-         }
-         stage("Docker push to nexus") {
-             steps {
-                withCredentials([usernameColonPassword(credentialsId: 'nexus', variable: 'Nexus-Pwd')]) {
-                sh 'docker login -u admin -p ${Nexus-Pwd} 18.222.180.174:8083'
-             }
-      
-             sh 'docker push 18.222.180.174:8083/sampleapp:1.0.0'
+                sh "mvn clean install"
             }
-         }
-         stage("Run docker container") {
-             steps { 
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t 18.222.180.174:8083/sampleapp:1.0.0 .'
+            }
+        }
+        stage('Docker Push to Nexus') {
+            steps {
+                
+                withCredentials([string(credentialsId: 'nexus', variable: 'nexus-pwd')]) {
+                   sh 'docker login -u admin -p ${nexus} 18.222.180.174:8083'
+                }
+                
+                sh 'docker push 18.222.180.174:8083/sampleapp:1.0.0'
+            }
+        }
+        stage('Run docker container') {
+            steps {
                 sh 'docker run -d --name sampleapp -p 8082:8082 18.222.180.174:8083/sampleapp:1.0.0'
-                sshagent(['dev-server']) {
-                sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.47.98 ${dockerRun}"
-             }
-         }
-      }      
-   }
+            }
+        
+        }
+    }
+}
