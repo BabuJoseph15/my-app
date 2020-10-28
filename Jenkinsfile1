@@ -11,7 +11,7 @@ pipeline {
            git changelog: false, credentialsId: 'Gitcredentials', poll: false, url: 'https://github.com/BabuJoseph15/my-app.git'
            }
         }
-        stage('unittesting') {
+        stage('UnitTesting') {
             steps {
                 sh 'mvn compile test'
             }
