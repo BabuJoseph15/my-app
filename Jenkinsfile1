@@ -3,7 +3,7 @@ pipeline {
         label "master"
     }
     tools {
-       maven "Maven"
+       maven "maven3"
     }
     environment {
         NEXUS_VERSION = "nexus3"
@@ -47,7 +47,7 @@ stage("SonarQube analysis") {
       sh 'docker push 18.222.180.174:8083/sampleapp:1.0.0'
       }
   }
-  stage("Run docker container")
+  stage("Run docker container") {
      steps { 
           sh 'docker run -d --name sampleapp -p 8082:8082 18.222.180.174:8083/sampleapp:1.0.0'
           sshagent(['dev-server']) {
