@@ -3,17 +3,17 @@ pipeline {
         label "master"
     }
     tools {
-       maven "maven3"
+       maven "Maven"
     }
     environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "18.222.180.174:8081"
+        NEXUS_URL = "3.19.27.239:8081"
         NEXUS_REPOSITORY = "sampleapp-release"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
     stages {
-        stage("Checkout") {
+        stage("SCM checkout") {
             steps {
                 script {
                     git 'https://github.com/BabuJoseph15/my-app.git';
@@ -26,35 +26,34 @@ steps{
 sh 'mvn test'
 }
 }
-stage("SonarQube Analysis") {
+stage("SonarQube analysis") {
              steps {
                  withSonarQubeEnv('sonar7') {
                   sh 'mvn sonar:sonar'
                  }    
              }
          }
-//stage('Quality Gate') {
-            //steps {
-              //timeout(time: 1, unit: 'HOURS') {
-                //waitForQualityGate abortPipeline: true
-              //}
-            //}
-          //}
-        stage("Maven Package") {
-            steps {
-                script {
-                    sh "mvn clean package"
-                }
-            }
+ stage("Build Docker Image") {
+    steps {
+        sh 'docker build . -t 18.222.180.174:8083/sampleapp:1.0.0'
         }
-        stage('Build Docker Image'){
-           sh 'docker build . -t 18.222.180.174:8083/sampleapp'
-        }
-        stage('Push Docker Image'){
-            withCredentials([string(credentialsId: 'nexus')]) {
-            sh "docker login -u admin -p ${nexus}"
-           }
-           sh 'docker push http://18.222.180.174:8081/repository/docker-repo/sampleapp:1.0.0'
-          }
-       }
      }
+ stage("Docker push to nexus") {
+    steps {
+      withCredentials([usernameColonPassword(credentialsId: 'nexus', variable: 'Nexus-Pwd')]) {
+         sh 'docker login -u admin -p ${Nexus-Pwd} 18.222.180.174:8083'
+      }
+      
+      sh 'docker push 18.222.180.174:8083/sampleapp:1.0.0'
+      }
+  }
+  stage("Run docker container")
+     steps { 
+          sh 'docker run -d --name sampleapp -p 8082:8082 18.222.180.174:8083/sampleapp:1.0.0'
+        }
+     }
+  }
+}  
+        
+      
+         
