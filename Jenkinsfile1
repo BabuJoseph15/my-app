@@ -37,7 +37,7 @@ pipeline {
             steps {
                 
                 withCredentials([string(credentialsId: 'nexus', variable: 'nexus-pwd')]) {
-                   sh 'docker login -u admin -p ${nexus} 18.222.180.174:8083'
+                   sh 'docker login -u admin -p admin123 18.222.180.174:8083'
                 }
                 
                 sh 'docker push 18.222.180.174:8083/sampleapp:1.0.0'
