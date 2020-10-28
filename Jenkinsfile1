@@ -8,7 +8,7 @@ pipeline {
     environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "3.19.27.239:8081"
+        NEXUS_URL = "18.222.180.174:8081"
         NEXUS_REPOSITORY = "sampleapp-release"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
@@ -47,5 +47,13 @@ stage("SonarQube Analysis") {
                 }
             }
         }
-        
-        
+        stage('Build Docker Image'){
+           sh 'docker build . -t 18.222.180.174:8083/sampleapp'
+        }
+        stage('Push Docker Image'){
+            withCredentials([string(credentialsId: 'nexus')]) {
+            sh "docker login -u admin -p ${nexus}"
+           }
+           sh 'docker push http://18.222.180.174:8081/repository/docker-repo/sampleapp:1.0.0'
+          }
+       }
