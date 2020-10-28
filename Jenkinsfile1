@@ -57,3 +57,4 @@ stage("SonarQube Analysis") {
            sh 'docker push http://18.222.180.174:8081/repository/docker-repo/sampleapp:1.0.0'
           }
        }
+     }
