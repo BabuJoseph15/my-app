@@ -6,7 +6,7 @@ pipeline {
     }
     
     stages {
-        stage('Git clone') {
+        stage('SCM checkout') {
            steps {
            git changelog: false, credentialsId: 'Gitcredentials', poll: false, url: 'https://github.com/BabuJoseph15/my-app.git'
            }
