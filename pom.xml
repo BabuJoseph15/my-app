@@ -35,12 +35,12 @@
 	</dependencies>
 	<distributionManagement>
 		 <snapshotRepository>
-		    <id>admin</id>
+		    <id>jfrog</id>
 		    <url>http://13.48.130.54:8082/artifactory/maven-snapshot-local/</url>
 		 </snapshotRepository>
 		
 		<repository>
-		    <id>admin</id>
+		    <id>jfrog</id>
 		    <url>http://13.48.130.54:8082/artifactory/maven-release-local/</url>
 		</repository>
   	</distributionManagement>
