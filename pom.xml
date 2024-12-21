@@ -87,6 +87,11 @@
                 <artifactId>artifactory-maven-plugin</artifactId>
                 <version>3.6.1</version>
             </plugin>
+	<plugin>
+            <groupId>
+                org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+        </plugin>
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
